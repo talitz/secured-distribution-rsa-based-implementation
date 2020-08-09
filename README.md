@@ -22,7 +22,7 @@ Please <b>strictly</b> follow each step of the following:
 
 1) Clone the project to your local directory:</br> ```git clone https://github.com/talitz/secured-distribution-rsa-based-implementation.git```.
 
-2) CD into the directory: ```cd payment-system-craft-demonstration-intuit-assignment```.
+2) CD into the directory: ```cd secured-distribution-rsa-based-implementation```.
 
 3) Provide permissions to the shell running scripts: ```chmod 755 *.yml```.
 
