@@ -1,0 +1,15 @@
+version: '2.0'
+services:
+  distributer-service:
+    build: distributer-service/
+    ports:
+      - "8080:8080"
+  receiver-service:
+    build: receiver-service/
+    ports:
+      - "8081:8081"
+  sender-service:
+    build: sender-service/
+    ports:  
+      - "8082:8082"
+    
