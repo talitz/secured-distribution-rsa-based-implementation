@@ -30,9 +30,15 @@ public class RESTPaymentController {
     }
 
     @GetMapping(value = "/public-key", produces={"application/json"})
-    public ResponseEntity<String> getPublicKey() throws URISyntaxException {
-        logger.info("getPublicKey() was called");
-        logger.info("getPublicKey() ended successfully");
+    public ResponseEntity<String> ValidSig(String sig, String message, KEY PublicKey) throws URISyntaxException {
+        logger.info("ValidSig() was called");
+        //step 1:take original message and hash it
+        int hashed = message.hashCode();
+        //step 2:decrypt file sig
+        String DecryptedSig = RSA.decrypt(sig, PublicKey);
+        //step 3:compare
+        return Integer.toString(hashed).equalsIgnoreCase(DecryptedSig);
+        logger.info("ValidSig() ended successfully");
         return new ResponseEntity<>(this.publicKey, HttpStatus.OK);
     }
 
