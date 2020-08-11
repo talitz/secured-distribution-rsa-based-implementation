@@ -32,4 +32,7 @@ Please <b>strictly</b> follow each step of the following:
 
 You are now ready to go. 
 
+Test the distributer micro-service and try to extract the public key that is accessible to everyone:
+```curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:8080/distributer-service/public-key```
+
 7) Terminate the project using: ```sudo docker-compose down```.
