@@ -32,8 +32,12 @@ Please <b>strictly</b> follow each step of the following:
 
 You are now ready to go. 
 
+### Basic Communication with Distributer:
 Test the distributer micro-service and try to extract the public key that is accessible to everyone:</br>
 ```curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:8080/distributer-service/public-key```
+
+Send a file as a string and get the relevant signatrue:</br>
+```curl -d "fileAsString=value1" -X POST http://localhost:8080/distributer-service/signature```
 
 ### 1st Scenario - Sending a Real File:
 - Sending a file with the sender microservice can be done with the following POST request:</br>
