@@ -38,11 +38,13 @@ public class RESTPaymentController {
         //Get the signature for the file
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         HttpEntity<String> entity = new HttpEntity<String>(fileAsString,headers);
+
+        logger.info("sendFile() - sending signature POST request to distributer service");
         String fileSignature = restTemplate.postForObject("http://localhost:8080/distributer-service/signature", entity, String.class);
         Message message = new Message(fileAsString,fileSignature);
 
-        //Send the file with signature to the receiver
-        Message response = restTemplate.postForObject("http://localhost:8080/receiver-service/receive-file", message, Message.class);
+        logger.info("sendFile() - sending the file with it's signature to the receiver service");
+        Message response = restTemplate.postForObject("http://localhost:8081/receiver-service/receive-file", message, Message.class);
 
         logger.info("sendFile() ended successfully");
         return new ResponseEntity<>("File was sent with the signature!", HttpStatus.OK);

@@ -41,11 +41,11 @@ public class RESTPaymentController {
         return new ResponseEntity<com.rsa.KEY>(this.publicKey, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/signature", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> createSignature(@RequestParam("fileAsString") String fileAsString) throws URISyntaxException {
+    @PostMapping(value = "/signature", produces={"application/json"})
+    public ResponseEntity<?> createSignature(@RequestBody String fileAsString) throws URISyntaxException {
         logger.info("createSignature() was called");
-        int hashed = fileAsString.hashCode(); //hashed msg
-        String enc = rsa.encrypt(Integer.toString(hashed), privateKey);
+        //int hashed = fileAsString.hashCode(); //hashed msg
+        String enc = rsa.encrypt(fileAsString, privateKey);
         logger.info("createSignature() ended successfully");
         return new ResponseEntity<>(enc, HttpStatus.OK);
     }

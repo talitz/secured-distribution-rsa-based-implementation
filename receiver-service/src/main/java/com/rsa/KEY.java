@@ -5,6 +5,8 @@ public class KEY {
 
     private BigInteger n, e;
 
+    public KEY() { }
+
     public KEY(BigInteger e, BigInteger n) {
         this.e = e;
         this.n = n;

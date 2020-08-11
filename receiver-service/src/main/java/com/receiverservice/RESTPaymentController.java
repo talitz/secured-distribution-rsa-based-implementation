@@ -26,24 +26,31 @@ public class RESTPaymentController {
     public RestTemplate restTemplate = new RestTemplate();
     public HttpHeaders headers = new HttpHeaders();
 
-    @GetMapping(value = "/receive-file", produces={"application/json"})
-    public ResponseEntity<String> receiveFile(Message message) throws URISyntaxException {
+    @PostMapping(value = "/receive-file", produces={"application/json"})
+    public ResponseEntity<?> receiveFile(@RequestBody Message message) throws URISyntaxException {
         logger.info("receiveFile() was called");
 
         headers.setContentType(MediaType.APPLICATION_JSON);
+        logger.info("receiveFile() - get the public key from the distributer service");
         KEY publicKey = restTemplate.getForObject("http://localhost:8080/distributer-service/public-key", KEY.class);
 
         int hashed = message.getFileAsString().hashCode();
 
+        logger.info("receiveFile() - decrypting using RSA decrypt function");
         String decryptedSig = RSA.decrypt(message.getSignature(), publicKey);
+
+        logger.info("receiveFile() - decryptedSig = "+decryptedSig);
+        logger.info("receiveFile() - hashed = "+hashed);
 
         Boolean isValid = Integer.toString(hashed).equalsIgnoreCase(decryptedSig);
 
         logger.info("receiveFile() ended successfully");
         if(isValid) {
+            logger.info("receiveFile() the signature is valid!");
             return new ResponseEntity<>("The file is valid!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("The file is NOT valid!", HttpStatus.FORBIDDEN);
+            logger.info("receiveFile() the signature is NOT valid!");
+            return new ResponseEntity<>("The file is NOT valid!", HttpStatus.BAD_REQUEST);
         }
     }
 

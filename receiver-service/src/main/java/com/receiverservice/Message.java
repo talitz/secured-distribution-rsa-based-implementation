@@ -6,6 +6,8 @@ public class Message implements Serializable {
     private String fileAsString;
     private String signature;
 
+    public Message() { }
+
     public Message(String fileAsString, String signature) {
         this.fileAsString = fileAsString;
         this.signature = signature;
