@@ -36,7 +36,8 @@ Test the distributer micro-service and try to extract the public key that is acc
 ```curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:8080/distributer-service/public-key```
 
 ### 1st Scenario - Sending a Real File:
-
+- Sending a file with the sender microservice can be done with the following POST request:</br>
+```curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X POST -data="fileAsString=This-is-real-file" http://localhost:8082/sender-service/send-file```
 
 ### 2nd Scenario - Sending a Fake File from a Man in the Middle:
 
