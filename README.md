@@ -41,7 +41,7 @@ Send a file as a string and get the relevant signatrue:</br>
 
 ### 1st Scenario - Sending a Real File:
 - Sending a file with the sender microservice can be done with the following POST request:</br>
-```curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X POST -data="fileAsString=This-is-real-file" http://localhost:8082/sender-service/send-file```
+```curl -d "fileAsString=value1" -X POST http://localhost:8082/sender-service/send-file```
 
 ### 2nd Scenario - Sending a Fake File from a Man in the Middle:
 
