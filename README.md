@@ -1,4 +1,4 @@
-# Secured-Distribution-RSA-Based-Implementation
+# Secured Distribution RSA Based Implementation
 
 <img src="https://i.ibb.co/gZ45j0T/Screen-Shot-2020-08-09-at-22-53-52.png" align="center">
 
