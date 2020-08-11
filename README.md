@@ -1,4 +1,4 @@
-# Secured-Distribution-RSA-Based-Implementation
+# Secured Distribution RSA Based Implementation
 
 <img src="https://i.ibb.co/gZ45j0T/Screen-Shot-2020-08-09-at-22-53-52.png" align="center">
 
@@ -31,5 +31,18 @@ Please <b>strictly</b> follow each step of the following:
 6) Check the status using ```sudo docker-compose ps -a```.
 
 You are now ready to go. 
+
+### Basic Communication with Distributer:
+Test the distributer micro-service and try to extract the public key that is accessible to everyone:</br>
+```curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://localhost:8080/distributer-service/public-key```
+
+Send a file as a string and get the relevant signatrue:</br>
+```curl -d "fileAsString=value1" -X POST http://localhost:8080/distributer-service/signature```
+
+### 1st Scenario - Sending a Real File:
+- Sending a file with the sender microservice can be done with the following POST request:</br>
+```curl -d "fileAsString=value1" -X POST http://localhost:8082/sender-service/send-file```
+
+### 2nd Scenario - Sending a Fake File from a Man in the Middle:
 
 7) Terminate the project using: ```sudo docker-compose down```.
