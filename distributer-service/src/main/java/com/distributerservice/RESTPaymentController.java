@@ -41,8 +41,7 @@ public class RESTPaymentController {
         return new ResponseEntity<com.rsa.KEY>(this.publicKey, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/signature", consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/signature", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> createSignature(@RequestParam("fileAsString") String fileAsString) throws URISyntaxException {
         logger.info("createSignature() was called");
         int hashed = fileAsString.hashCode(); //hashed msg

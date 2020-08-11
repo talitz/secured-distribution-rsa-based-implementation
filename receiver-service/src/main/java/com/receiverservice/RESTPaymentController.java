@@ -1,11 +1,13 @@
 package com.receiverservice;
 
 import com.google.gson.Gson;
+import com.rsa.KEY;
+import com.rsa.RSA;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -21,25 +23,28 @@ public class RESTPaymentController {
     @Autowired
     private Gson gson;
 
-    private String privateKey = "", publicKey = "";
+    public RestTemplate restTemplate = new RestTemplate();
+    public HttpHeaders headers = new HttpHeaders();
 
-    @PostConstruct
-    public void init() {
-        privateKey = "this-is-the-private-key-bitch";
-        publicKey = "this-is-the-public-key-bitch";
-    }
+    @GetMapping(value = "/receive-file", produces={"application/json"})
+    public ResponseEntity<String> receiveFile(Message message) throws URISyntaxException {
+        logger.info("receiveFile() was called");
 
-    @GetMapping(value = "/public-key", produces={"application/json"})
-    public ResponseEntity<String> ValidSig(String sig, String message, KEY PublicKey) throws URISyntaxException {
-        logger.info("ValidSig() was called");
-        //step 1:take original message and hash it
-        int hashed = message.hashCode();
-        //step 2:decrypt file sig
-        String DecryptedSig = RSA.decrypt(sig, PublicKey);
-        //step 3:compare
-        return Integer.toString(hashed).equalsIgnoreCase(DecryptedSig);
-        logger.info("ValidSig() ended successfully");
-        return new ResponseEntity<>(this.publicKey, HttpStatus.OK);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        KEY publicKey = restTemplate.getForObject("http://localhost:8080/distributer-service/public-key", KEY.class);
+
+        int hashed = message.getFileAsString().hashCode();
+
+        String decryptedSig = RSA.decrypt(message.getSignature(), publicKey);
+
+        Boolean isValid = Integer.toString(hashed).equalsIgnoreCase(decryptedSig);
+
+        logger.info("receiveFile() ended successfully");
+        if(isValid) {
+            return new ResponseEntity<>("The file is valid!", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("The file is NOT valid!", HttpStatus.FORBIDDEN);
+        }
     }
 
     public void setGson(Gson gson) {

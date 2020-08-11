@@ -28,29 +28,23 @@ public class RESTPaymentController {
     @Autowired
     public LoggingController logger;
 
+    public RestTemplate restTemplate = new RestTemplate();
+    public HttpHeaders headers = new HttpHeaders();
+
     @PostMapping(value = "/send-file", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> sendFile(@RequestParam("fileAsString") String fileAsString) throws URISyntaxException, MalformedURLException {
         logger.info("sendFile() was called");
-        String response = getResponse("This is the file bro!","http://localhost:8080/distributer-service/signature");
-        logger.info("response = "+ response);
+
+        //Get the signature for the file
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity<String> entity = new HttpEntity<String>(fileAsString,headers);
+        String fileSignature = restTemplate.postForObject("http://localhost:8080/distributer-service/signature", entity, String.class);
+        Message message = new Message(fileAsString,fileSignature);
+
+        //Send the file with signature to the receiver
+        Message response = restTemplate.postForObject("http://localhost:8080/receiver-service/receive-file", message, Message.class);
+
         logger.info("sendFile() ended successfully");
         return new ResponseEntity<>("File was sent with the signature!", HttpStatus.OK);
-    }
-
-    public String getResponse(String fileAsString, String url) {
-        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-        headers.add("Content-Type", "application/json");
-
-        String responseBody = post(url, fileAsString, headers, String.class);
-        return responseBody;
-    }
-
-    public <T> T post(String url, Object requestObject, MultiValueMap<String, String> headers, Class<T> responseType) {
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-        restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-        HttpEntity request = new HttpEntity(requestObject, headers);
-        T responseObject = restTemplate.postForObject(url, request, responseType);
-        return responseObject;
     }
 }
