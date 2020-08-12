@@ -12,6 +12,7 @@ Complete me.
 ### Prerequisites:
 
 - Docker 19.03.12. 
+- Docker Compose 1.26.2.
 - Java 13.0.2.
 - Maven 3.6.3.
 - The following ports should be open before running the project: 8080, 8081, 8082.
@@ -28,7 +29,7 @@ Please <b>strictly</b> follow each step of the following:
 
 4) Provide permissions to the shell running scripts: ```chmod 755 *.yml```.
 
-5) Run all Micro-Services: ```sudo docker-compose up -d --no-deps --build```.
+5) Run all Micro-Services: ```sudo docker-compose up --build --force-recreate --no-deps```.
 
 6) Check the status using ```sudo docker-compose ps -a```.
 
