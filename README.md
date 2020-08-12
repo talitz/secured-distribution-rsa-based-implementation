@@ -3,11 +3,20 @@
 <img src="https://i.ibb.co/gZ45j0T/Screen-Shot-2020-08-09-at-22-53-52.png" align="center">
 
 ### Introduction:
-Complete me.
-- <b>Complete me</b> - Complete me.
-- <b>Complete me</b> - Complete me. 
-- <b>Complete me</b> - Complete me.
-- <b>Complete me</b> - Complete me.
+
+We implemented the project so that each square represents a different microservis (runs in a different process) that implements the REST API, which enables the communication between the different microservices.
+
+"Sender" - represents the source, which wants to send a file to the "Receiver".
+
+"Distributor" - represents a microservice that is a "service person" who manages the file distribution operation. That is, it manages the encryption, holds in its hand the public and private key and allows access to the public key to anyone who requests using the endpoint we implemented for the REST API.
+
+"Receiver" - represents the destination, which wants to receive the file from the "Sender".
+
+The "sender" and "recipient" can, with the help of a GET call, receive the public key from the "distributor".
+The "distributor" also uses a class that implements the functionality of the RSA encryption algorithm, which we implemented in the class in Java.
+The various microbubbles talk to each other using the REST API.
+
+You can run the project in 3 different processes, as Java applications, and you can also pack them in Docker Containers, and run the project in one command using Docker-Compose
 
 ### Prerequisites:
 
