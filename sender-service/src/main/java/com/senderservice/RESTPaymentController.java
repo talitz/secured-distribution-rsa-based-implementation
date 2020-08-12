@@ -53,7 +53,32 @@ public class RESTPaymentController {
         String response = restTemplate.postForObject("http://localhost:8081/receiver-service/receive-file", message, String.class);
 
         logger.info("sendFile() ended successfully");
+        
         //TODO: print the response
-        return new ResponseEntity<>("File was sent with the signature!, response = " + response, HttpStatus.OK);
+        return new ResponseEntity<>("File was sent with the signature!, response = " + response + "\n", HttpStatus.OK);
+    }
+    
+    @PostMapping(value = "/send-file-corrupted", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> sendFileCorrupted(@RequestParam("fileAsString") String fileAsString) throws URISyntaxException, MalformedURLException {
+        logger.info("sendFileCorrupted() was called");
+        //Get the signature for the file
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        
+        logger.info("sendFileCorrupted() fileAsString = " + fileAsString);
+        logger.info("sendFileCorrupted() - sending signature POST request to distributer service");
+        String fileSignature = restTemplate.postForObject("http://localhost:8080/distributer-service/signature", fileAsString, String.class);
+        
+        //modify slightly the file after generating the file signature 
+        String fileAsStringChanged = fileAsString + " ";
+        
+        Message message = new Message(fileAsStringChanged,fileSignature);
+
+        logger.info("sendFileCorrupted() - sending the file with it's signature to the receiver service");
+        String response = restTemplate.postForObject("http://localhost:8081/receiver-service/receive-file", message, String.class);
+
+        logger.info("sendFileCorrupted() ended successfully");
+        
+        //TODO: print the response
+        return new ResponseEntity<>("File was sent with the signature!, response = " + response + "\n", HttpStatus.OK);
     }
 }

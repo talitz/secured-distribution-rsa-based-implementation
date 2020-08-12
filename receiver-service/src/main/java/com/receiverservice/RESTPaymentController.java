@@ -51,7 +51,8 @@ public class RESTPaymentController {
             return new ResponseEntity<>("The file is valid!", HttpStatus.OK);
         } else {
             logger.info("receiveFile() the signature is NOT valid!");
-            return new ResponseEntity<>("The file is NOT valid!", HttpStatus.BAD_REQUEST);
+            //return new ResponseEntity<>("The file is NOT valid!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("The file is NOT valid!", HttpStatus.OK);
         }
     }
 
