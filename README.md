@@ -28,7 +28,7 @@ Please <b>strictly</b> follow each step of the following:
 
 4) Provide permissions to the shell running scripts: ```chmod 755 *.yml```.
 
-5) Run all Micro-Services: ```sudo docker-compose up -d```.
+5) Run all Micro-Services: ```sudo docker-compose up -d --no-deps --build```.
 
 6) Check the status using ```sudo docker-compose ps -a```.
 
