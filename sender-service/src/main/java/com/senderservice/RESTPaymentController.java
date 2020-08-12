@@ -45,12 +45,12 @@ public class RESTPaymentController {
 
         logger.info("sendFile() - sending signature POST request to distributer service");
         //String fileSignature = restTemplate.postForObject("http://localhost:8080/distributer-service/signature", entity, String.class);
-        String fileSignature = restTemplate.postForObject("http://localhost:8080/distributer-service/signature", fileAsString, String.class);
+        String fileSignature = restTemplate.postForObject("http://distributer-service:8080/distributer-service/signature", fileAsString, String.class);
 
         Message message = new Message(fileAsString,fileSignature);
 
         logger.info("sendFile() - sending the file with it's signature to the receiver service");
-        String response = restTemplate.postForObject("http://localhost:8081/receiver-service/receive-file", message, String.class);
+        String response = restTemplate.postForObject("http://receiver-service:8081/receiver-service/receive-file", message, String.class);
 
         logger.info("sendFile() ended successfully");
         
@@ -66,7 +66,7 @@ public class RESTPaymentController {
         
         logger.info("sendFileCorrupted() fileAsString = " + fileAsString);
         logger.info("sendFileCorrupted() - sending signature POST request to distributer service");
-        String fileSignature = restTemplate.postForObject("http://localhost:8080/distributer-service/signature", fileAsString, String.class);
+        String fileSignature = restTemplate.postForObject("http://distributer-service:8080/distributer-service/signature", fileAsString, String.class);
         
         //modify slightly the file after generating the file signature 
         String fileAsStringChanged = fileAsString + " ";
@@ -74,7 +74,7 @@ public class RESTPaymentController {
         Message message = new Message(fileAsStringChanged,fileSignature);
 
         logger.info("sendFileCorrupted() - sending the file with it's signature to the receiver service");
-        String response = restTemplate.postForObject("http://localhost:8081/receiver-service/receive-file", message, String.class);
+        String response = restTemplate.postForObject("http://receiver-service:8081/receiver-service/receive-file", message, String.class);
 
         logger.info("sendFileCorrupted() ended successfully");
         

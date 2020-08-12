@@ -32,7 +32,7 @@ public class RESTPaymentController {
 
         headers.setContentType(MediaType.APPLICATION_JSON);
         logger.info("receiveFile() - get the public key from the distributer service");
-        KEY publicKey = restTemplate.getForObject("http://localhost:8080/distributer-service/public-key", KEY.class);
+        KEY publicKey = restTemplate.getForObject("http://distributer-service:8080/distributer-service/public-key", KEY.class);
 
         int hashed = message.getFileAsString().hashCode();
 
