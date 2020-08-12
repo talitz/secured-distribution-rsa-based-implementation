@@ -6,7 +6,7 @@ import java.security.SecureRandom;
 public class RSA {
 
 	private BigInteger n, d, e, lcm;
-	private int bitlen = 256;
+	private int bitlen = 1024;//was 1024/256
 	private KEY PrivateKey;
 	private KEY PublicKey;
 

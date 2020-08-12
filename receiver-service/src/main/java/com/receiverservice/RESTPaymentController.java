@@ -40,8 +40,9 @@ public class RESTPaymentController {
         String decryptedSig = RSA.decrypt(message.getSignature(), publicKey);
 
         logger.info("receiveFile() - decryptedSig = "+decryptedSig);
-        logger.info("receiveFile() - hashed = "+hashed);
-
+        logger.info("receiveFile() - original hashed string = "+hashed);
+        
+        
         Boolean isValid = Integer.toString(hashed).equalsIgnoreCase(decryptedSig);
 
         logger.info("receiveFile() ended successfully");
