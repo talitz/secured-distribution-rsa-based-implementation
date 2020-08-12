@@ -55,4 +55,7 @@ Send a file as a string and get the relevant signatrue:</br>
 - Sending a file with the sender microservice can be done with the following POST request:</br>
 ```curl -d "fileAsString=value1" -X POST http://localhost:8082/sender-service/send-file```
 
-### 2nd Scenario - Sending a Fake File from a Man in the Middle:
+### 2nd Scenario - Sending a modified File:
+In this scenario, the file sent to the receiver is slightly modified after generating the signature (added 1 char to the string)
+- Sending a file with the sender microservice can be done with the following POST request:</br>
+```curl -d "fileAsString=value1" -X POST http://localhost:8082/sender-service/send-file-corrupted```
