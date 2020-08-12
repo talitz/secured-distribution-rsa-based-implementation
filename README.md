@@ -2,6 +2,8 @@
 
 <img src="https://i.ibb.co/gZ45j0T/Screen-Shot-2020-08-09-at-22-53-52.png" align="center">
 
+*Submitted by Tal Yitzhak and Raphael Zanzouri.
+
 ### Introduction:
 
 We implemented the project so that each square represents a different microservis (runs in a different process) that implements the REST API, which enables the communication between the different microservices.
@@ -16,7 +18,7 @@ The "sender" and "recipient" can, with the help of a GET call, receive the publi
 The "distributor" also uses a class that implements the functionality of the RSA encryption algorithm, which we implemented in Java class.
 The various microservices talk to each other using the REST API.
 
-You can run the project in 3 different processes, as Java applications, and you can also pack them in Docker Containers, and run the project in one command using Docker-Compose
+You can run the project in 3 different processes, as Java applications, and you can also pack them in Docker Containers, and run the project in one command using Docker-Compose.
 
 ### Prerequisites:
 
