@@ -24,13 +24,15 @@ Please <b>strictly</b> follow each step of the following:
 
 2) CD into the directory: ```cd secured-distribution-rsa-based-implementation```.
 
-3) Provide permissions to the shell running scripts: ```chmod 755 *.yml```.
+3) Build the project using Maven: ```mvn clean install```.
+
+4) Provide permissions to the shell running scripts: ```chmod 755 *.yml```.
 
 5) Run all Micro-Services: ```sudo docker-compose up -d```.
 
 6) Check the status using ```sudo docker-compose ps -a```.
 
-You are now ready to go. 
+7) Terminate the project using: ```sudo docker-compose down```.
 
 ### Basic Communication with Distributer:
 Test the distributer micro-service and try to extract the public key that is accessible to everyone:</br>
@@ -44,5 +46,3 @@ Send a file as a string and get the relevant signatrue:</br>
 ```curl -d "fileAsString=value1" -X POST http://localhost:8082/sender-service/send-file```
 
 ### 2nd Scenario - Sending a Fake File from a Man in the Middle:
-
-7) Terminate the project using: ```sudo docker-compose down```.
